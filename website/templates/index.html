@@ -18,7 +18,12 @@
         </button>
       </div>
     </nav>
-
     {% endblock %}
+    <div class="container-fluid">
+      {% for keyword in keywords %}
+      <input type="checkbox" class="btn-check" id="btn-check-{{keyword}}" autocomplete="off">
+      <label class="btn" for="btn-check-{{keyword}}">{{keyword}}</label>
+      {% endfor %}
+    </div>
   </body>
 </html>
