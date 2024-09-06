@@ -1,8 +1,35 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request, redirect, url_for
 
 views = Blueprint('views', __name__)
 
-@views.route('/')
+@views.route('/', methods = ["GET","POST"])
 def home():
-  keywords = ['Computers', 'Math', 'Science', 'Art', 'Electricity', 'Space', 'Law', 'Police', 'Construction', 'Engineering']
-  return render_template('index.html', keywords = keywords)
+  if request.method == "POST":
+    keywords = request.form.getlist("keywords")
+    ##print(keywords)
+    keywords_str = ','.join(keywords)
+    return redirect(url_for('views.results', keywords = keywords_str))
+  else:    
+    keywords = ['Computers', 'Math', 'Science', 'Art', 'Electricity', 'Space', 'Law', 'Police', 'Construction', 'Engineering', 'Placeholder', 'Placeholder2', 'Placeholder3', 'Placeholder4']
+    return render_template('index.html', keywords = keywords)
+
+@views.route('/results')
+def results():
+  example_majors = {
+    'Computer Science' : ['Computers, Electricity, Science, Math, Engineering'],
+    'Construction':['Computers', 'Engineering', 'Math', 'Construction'],
+    'Animation':['Computers', 'Art'],
+    'Law Enforcment':['Law', 'Police'],
+    'Astronaught': ['Science', 'Space', 'Engineering']
+  }
+  # Get the comma-separated keywords string from the URL
+  keywords_str = request.args.get('keywords')
+  # Convert the string back into a list
+  keywords_list = keywords_str.split(',') if keywords_str else []
+  keywords_set = set(keywords_list)
+  filtered_majors = {}
+  for major, keywords in example_majors.items():
+    if any(keyword in keywords_set for keyword in keywords):
+      filtered_majors[major] = keywords
+
+  return render_template('results.html', majors = filtered_majors)
