@@ -6,11 +6,16 @@ views = Blueprint('views', __name__)
 def home():
   if request.method == "POST":
     keywords = request.form.getlist("keywords")
+    First_Name = request.form.get("First Name")
+    Last_Name = request.form.get("Last Name")
+    English_Level = request.form.get("English Level")
+    Math_Level = request.form.get("Math Level")
     ##print(keywords)
+    print(First_Name, Last_Name, English_Level, Math_Level)
     keywords_str = ','.join(keywords)
-    return redirect(url_for('views.results', keywords = keywords_str))
+    return redirect(url_for('views.results', keywords = keywords_str, First_name = First_Name))
   else:    
-    keywords = ['Computers', 'Math', 'Science', 'Art', 'Electricity', 'Space', 'Law', 'Police', 'Construction', 'Engineering', 'Placeholder', 'Placeholder2', 'Placeholder3', 'Placeholder4']
+    keywords = ['Computers', 'Math', 'Science', 'Art', 'Electricity', 'Space', 'Law', 'Police', 'Construction', 'Engineering', 'Placeholder', 'Placeholder2', 'Placeholder3', 'Placeholder4', 'ahhhhhhhhhhhhhhhhhhhhhhhhh']
     return render_template('index.html', keywords = keywords)
 
 @views.route('/results')
