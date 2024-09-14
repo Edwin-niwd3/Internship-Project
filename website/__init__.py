@@ -35,7 +35,7 @@ def data_insert(app, db, Model):
     for index, row, in combinedDf.iterrows():
       data = {
         'Course_Name': row.get('Courses'),
-        'Course_Prerequisite': row.get('Prerequisite'),
+        'Course_Prerequisite': row.get('Prererequisite'),
         'Course_Notes': row.get('Notes')
       }
       insert_data_if_not_exists(db.session, Model, data)
