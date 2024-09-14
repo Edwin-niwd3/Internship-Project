@@ -1,20 +1,6 @@
 import pandas as pd
 import os
 
-class Course:
-  def __init__(self, name, prerequisite = None):
-    self.name = name
-    self.prerequisite = prerequisite
-
-  def get_prereqiosotes(self):
-    if self.prerequisite:
-      return [self.prerequisite.name] + self.prerequisite.get_prerequisites()
-    else:
-      return []
-    
-  def __repr__(self):
-    return self.name
-
 def read():
   folder_path = 'data'
   dfs = []
@@ -32,7 +18,6 @@ def read():
 def main():
   test = read()
   print(test)
-
 
 if __name__ == "__main__":
   main()

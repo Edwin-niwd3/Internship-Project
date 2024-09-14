@@ -10,5 +10,6 @@ class Student(UserMixin):
 
 class Class(db.Model):
   id = db.Column(db.Integer, primary_key = True)
-  class_name = db.Column(db.String(1000))
-  class_prerequisite = db.Column(db.String(1000))
+  Course_Name = db.Column(db.String(1000))
+  Course_Prerequisite = db.Column(db.String(1000))
+  Course_Notes = db.Column(db.String(10000))
