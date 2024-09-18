@@ -9,7 +9,13 @@ class Student(UserMixin):
     self.keywords = keywords
 
 class Class(db.Model):
-  id = db.Column(db.Integer, primary_key = True)
-  Course_Name = db.Column(db.String(1000))
-  Course_Prerequisite = db.Column(db.String(1000))
-  Course_Notes = db.Column(db.String(10000))
+    id = db.Column(db.Integer, primary_key=True)
+    Course_Name = db.Column(db.String(1000))
+    Course_Prerequisite = db.Column(db.String(1000))
+    Course_Notes = db.Column(db.String(10000))
+    Course_Path = db.Column(db.Integer, db.ForeignKey('path.id'))
+
+class Path(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    Path_Name = db.Column(db.String(120), unique = True)
+    classes = db.relationship('Class')
