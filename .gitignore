@@ -9,11 +9,14 @@
 [Ss]cripts
 pyvenv.cfg
 .venv
+virtual
 pip-selfcheck.json
 ### Flask.Python Stack ###
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
+
+
 
 data
