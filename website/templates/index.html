@@ -34,7 +34,7 @@
         <input type="text" class = "form-control" placeholder="Last Name" aria-label = "Last Name" aria-describedby="basic-addon1" name = "Last Name">
       </div>
       <!--Highest Levels-->
-      <div class="input-group mb-3 d-flex justify-content-center">
+      <!-- <div class="input-group mb-3 d-flex justify-content-center">
         <span class = "input-group-text" id = "Education Question">Whats the highest Math Level you took?</span>
         <select name="Math Level" id="Math Level" class="form-select">
           <option selected value = '1'>Algebra 1</option>
@@ -55,7 +55,43 @@
           <option value = '5'>English Literature</option>
           <option value = '6'>English Language</option>
         </select>
-      </div>
+      </div> -->
+      <!-- Testing -->
+<div class="container mt-5">
+  {% for path in paths %}
+    <h2 class="my-4 d-flex justify-content-center">{{path.Path_Name}}</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th rowspan="2">Subject</th>
+                <th colspan="6">Grade Level</th>
+                <th rowspan="2">Honors</th>
+                <th rowspan="2">AP</th>
+                <th rowspan="2">Dual Enrollment</th>
+            </tr>
+            <tr>
+                <th>None</th>
+                <th>Before 9th Grade</th>
+                <th>9th</th>
+                <th>10th</th>
+                <th>11th</th>
+                <th>12th</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for course in path.classes %}
+            <tr>
+              <td class="subject-col">{{course.Course_Name}}</td>
+                {% for x in range(9) %}
+                  <td><input type="checkbox" class="form-check-input"></td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+  {% endfor %}
+</div>
+
       <!--keywords section-->
       <h1 class="my-4 d-flex justify-content-center">Keywords</h1>
       <div class="row">
