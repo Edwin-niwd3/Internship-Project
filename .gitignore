@@ -17,6 +17,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+aws-elastic-beanstalk-cli-setup
 
 
 data
