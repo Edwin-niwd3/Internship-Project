@@ -83,7 +83,7 @@
             <tr>
               <td class="subject-col">{{course.Course_Name}}</td>
                 {% for x in range(9) %}
-                  <td><input type="checkbox" class="form-check-input"></td>
+                <td><input type="radio" name="grade-{{course.Course_Name}}" class="form-check-input" id="radio-{{course.Course_Name}}-{{x}}" value="{{x}}"></td>
                 {% endfor %}
             </tr>
             {% endfor %}

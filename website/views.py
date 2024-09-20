@@ -7,13 +7,21 @@ views = Blueprint('views', __name__)
 @views.route('/', methods = ["GET","POST"])
 def home():
   if request.method == "POST":
+    selected_grades = {}
     keywords = request.form.getlist("keywords")
     First_Name = request.form.get("First Name")
     Last_Name = request.form.get("Last Name")
-    English_Level = request.form.get("English Level")
-    Math_Level = request.form.get("Math Level")
+    paths = Path.query.all()
+    course_names = []
+    for path in paths:
+      for course in path.classes:
+        course_names.append(course.Course_Name)
+    for course in course_names:
+      # Retrieve the selected radio button value for each course
+      selected_grade = request.form.get(f'grade-{course}')
+      selected_grades[course] = selected_grade
     ##print(keywords)
-    print(First_Name, Last_Name, English_Level, Math_Level)
+    print(First_Name, Last_Name, selected_grades)
     keywords_str = ','.join(keywords)
     return redirect(url_for('views.results', keywords = keywords_str, First_name = First_Name))
   else:    
