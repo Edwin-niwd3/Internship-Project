@@ -19,3 +19,10 @@ class Path(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     Path_Name = db.Column(db.String(120), unique = True)
     classes = db.relationship('Class')
+
+class Major(db.Model):
+   id = db.Column(db.Integer, primary_key = True)
+   Major_Name = db.Column(db.String(120), unique = True)
+   Math_Level = db.Column(db.String(120))
+   English_Level = db.Column(db.String(120))
+   Science_Level = db.Column(db.String(120))
