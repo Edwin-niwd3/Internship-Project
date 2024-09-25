@@ -26,3 +26,4 @@ class Major(db.Model):
    Math_Level = db.Column(db.String(120))
    English_Level = db.Column(db.String(120))
    Science_Level = db.Column(db.String(120))
+   Major_Keywords = db.Column(db.String(10000))
