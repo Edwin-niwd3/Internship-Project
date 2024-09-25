@@ -18,7 +18,7 @@ def read():
 
 def main():
   test = read()
-  print(test[1])
+  print(test[0])
 
 if __name__ == "__main__":
   main()
