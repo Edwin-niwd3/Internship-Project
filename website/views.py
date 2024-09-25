@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for
-from .models import Path
+from .models import Path, Major
 
 
 views = Blueprint('views', __name__)
@@ -31,21 +31,25 @@ def home():
 
 @views.route('/results')
 def results():
-  example_majors = {
-    'Computer Science' : ['Computers, Electricity, Science, Math, Engineering'],
-    'Construction':['Computers', 'Engineering', 'Math', 'Construction'],
-    'Animation':['Computers', 'Art'],
-    'Law Enforcment':['Law', 'Police'],
-    'Astronaught': ['Science', 'Space', 'Engineering']
-  }
+  # example_majors = {
+  #   'Computer Science' : ['Computers, Electricity, Science, Math, Engineering'],
+  #   'Construction':['Computers', 'Engineering', 'Math', 'Construction'],
+  #   'Animation':['Computers', 'Art'],
+  #   'Law Enforcment':['Law', 'Police'],
+  #   'Astronaught': ['Science', 'Space', 'Engineering']
+  # }
   # Get the comma-separated keywords string from the URL
   keywords_str = request.args.get('keywords')
   # Convert the string back into a list
   keywords_list = keywords_str.split(',') if keywords_str else []
   keywords_set = set(keywords_list)
   filtered_majors = {}
-  for major, keywords in example_majors.items():
-    if any(keyword in keywords_set for keyword in keywords):
-      filtered_majors[major] = keywords
+  majors = Major.query.all()
+  for major in majors:
+    major_keywords = major.Major_Keywords.strip().split(',') if major.Major_Keywords else []
+    major_set = set(major_keywords)
+    intersect = list(major_set & keywords_set)
+    filtered_majors.update({major.Major_Name: len(intersect)})
+    print(filtered_majors)
 
-  return render_template('results.html', majors = filtered_majors)
+  return render_template('results.html')
