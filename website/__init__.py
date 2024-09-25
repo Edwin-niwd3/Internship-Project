@@ -54,12 +54,14 @@ def data_insert(app, db, Class, Path, Major):
           math_course = row.get('Math Level')  # This is now a string
           english_course = row.get('English Level')  # This is now a string
           science_course = row.get('Science Level')  # This is now a string
+          major_keywords = row.get('Keywords')
 
           major_data = {
               'Major_Name': major_name,
               'Math_Level': math_course,
               'English_Level': english_course,
-              'Science_Level': science_course
+              'Science_Level': science_course,
+              'Major_Keywords' : major_keywords
           }
           print(f'major data: ', major_data)
           if major_data['Major_Name']:
