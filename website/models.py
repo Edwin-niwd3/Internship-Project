@@ -3,10 +3,11 @@ from flask_sqlalchemy import SQLAlchemy
 from . import db
 
 class Student(UserMixin):
-  def __init__(self, firstName, lastName, keywords):
+  def __init__(self, firstName, lastName, keywords, classesTaken):
     self.firstName = firstName
     self.lastNam = lastName
     self.keywords = keywords
+    self.classesTaken = classesTaken
 
 class Class(db.Model):
     id = db.Column(db.Integer, primary_key=True)

@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, flash
 from .models import Path, Major
 
 
@@ -11,6 +11,13 @@ def home():
     keywords = request.form.getlist("keywords")
     First_Name = request.form.get("First Name")
     Last_Name = request.form.get("Last Name")
+
+    if First_Name == None or Last_Name == None:
+      flash("Missing Name", 'error')
+      return redirect(request.url)
+    if keywords == None:
+      flash("Please select at least one key word", 'error')
+      return redirect(request.url)
     paths = Path.query.all()
     course_names = []
     for path in paths:
@@ -20,6 +27,9 @@ def home():
       # Retrieve the selected radio button value for each course
       selected_grade = request.form.get(f'grade-{course}')
       selected_grades[course] = selected_grade
+      if selected_grade == None:
+        flash(f"{course} was left unanswered", 'error')
+        return redirect(request.url)
     ##print(keywords)
     print(First_Name, Last_Name, selected_grades)
     keywords_str = ','.join(keywords)

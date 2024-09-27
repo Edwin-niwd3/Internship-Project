@@ -79,9 +79,6 @@ def insert_Major_if_not_exists(session, model, data):
       new_record = model(**data)
       session.add(new_record)
       session.commit()
-      print(f"Inserted new Major: ", {new_record})
-   else:
-      print('Major Insertion Failed!!!')
 
 def Class_exists(session, model, **data): 
     query = session.query(model).filter_by(Course_Name = data['Course_Name'])
