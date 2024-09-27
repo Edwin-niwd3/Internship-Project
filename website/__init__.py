@@ -63,7 +63,6 @@ def data_insert(app, db, Class, Path, Major):
               'Science_Level': science_course,
               'Major_Keywords' : major_keywords
           }
-          print(f'major data: ', major_data)
           if major_data['Major_Name']:
             insert_Major_if_not_exists(db.session, Major, major_data)
 
@@ -72,7 +71,6 @@ def insert_Class_if_not_exists(session, model, data):
         new_record = model(**data)
         session.add(new_record)
         session.commit()
-        print(f"Inserted new Class: {new_record}")
 
 def insert_Major_if_not_exists(session, model, data):
    if not Major_exists(session, model, **data):
