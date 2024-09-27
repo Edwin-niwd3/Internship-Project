@@ -3,11 +3,21 @@ from flask_sqlalchemy import SQLAlchemy
 from . import db
 
 class Student(UserMixin):
-  def __init__(self, firstName, lastName, keywords, classesTaken):
-    self.firstName = firstName
-    self.lastNam = lastName
-    self.keywords = keywords
-    self.classesTaken = classesTaken
+    def __init__(self, firstName, lastName, keywords, classesTaken):
+        self.firstName = firstName
+        self.lastName = lastName
+        self.keywords = keywords
+        self.classesTaken = classesTaken
+    def to_dict(self):
+        return{
+        'firstName': self.firstName,
+        'lastName' : self.lastName,
+        'keywords' : self.keywords,
+        'classesTaken' : self.classesTaken
+        }
+    @staticmethod
+    def from_dict(self, data):
+        return Student(data['firstName'], data['lastName'], data['keywords'], data['classesTaken'])
 
 class Class(db.Model):
     id = db.Column(db.Integer, primary_key=True)

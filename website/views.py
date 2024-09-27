@@ -1,5 +1,5 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
-from .models import Path, Major
+from flask import Blueprint, render_template, request, redirect, url_for, flash, session
+from .models import Path, Major, Student
 
 
 views = Blueprint('views', __name__)
@@ -31,8 +31,9 @@ def home():
         flash(f"{course} was left unanswered", 'error')
         return redirect(request.url)
     ##print(keywords)
-    print(First_Name, Last_Name, selected_grades)
     keywords_str = ','.join(keywords)
+    student = Student(firstName = First_Name, lastName = Last_Name, keywords= keywords_str, classesTaken=selected_grades)
+    session['student'] = student.to_dict()
     return redirect(url_for('views.results', keywords = keywords_str, First_name = First_Name))
   else:    
     keywords = ['Computers', 'Math', 'Science', 'Art', 'Electricity', 'Space', 'Law', 'Police', 'Construction', 'Engineering', 'Placeholder', 'Placeholder2', 'Placeholder3', 'Placeholder4']
@@ -41,13 +42,6 @@ def home():
 
 @views.route('/results')
 def results():
-  # example_majors = {
-  #   'Computer Science' : ['Computers, Electricity, Science, Math, Engineering'],
-  #   'Construction':['Computers', 'Engineering', 'Math', 'Construction'],
-  #   'Animation':['Computers', 'Art'],
-  #   'Law Enforcment':['Law', 'Police'],
-  #   'Astronaught': ['Science', 'Space', 'Engineering']
-  # }
   # Get the comma-separated keywords string from the URL
   keywords_str = request.args.get('keywords')
   # Convert the string back into a list
@@ -60,6 +54,8 @@ def results():
     major_set = set(major_keywords)
     intersect = list(major_set & keywords_set)
     filtered_majors.update({major.Major_Name: len(intersect)})
-    print(filtered_majors)
+  #sort majors based on most amount of keywords
+  sorted_dict = dict(sorted(filtered_majors.items(), key=lambda item: item[1]))
+  print(sorted_dict)
 
-  return render_template('results.html')
+  return render_template('results.html', filtered_majors = filtered_majors)
