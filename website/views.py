@@ -55,7 +55,13 @@ def results():
     intersect = list(major_set & keywords_set)
     filtered_majors.update({major.Major_Name: len(intersect)})
   #sort majors based on most amount of keywords
-  sorted_dict = dict(sorted(filtered_majors.items(), key=lambda item: item[1]))
-  print(sorted_dict)
+  sorted_dict = dict(sorted(filtered_majors.items(), key=lambda item: item[1], reverse = True))
+  queries = []
+  for key in sorted_dict:
+    query = Major.query.filter_by(Major_Name = key).first()
+    if query:
+      queries.append(query)
+    else:
+      print(f"no query found for {key}")
 
-  return render_template('results.html', filtered_majors = filtered_majors)
+  return render_template('results.html', filtered_majors = queries)
