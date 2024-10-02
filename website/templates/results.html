@@ -3,6 +3,32 @@
 {% block main %}
 <div class="container-fluid mt-3 justify-content-center align-items-center">
   <h1 class="my-4 d-flex justify-content-center">Majors</h1>
-  
+  {% for majors in filtered_majors %}
+  <div class="card text-bg-dark mb-3">
+    <div class="class-header">
+      <h2>{{majors.Major_Name}}</h2>
+    </div>
+    <div class="card-body">
+      <h2 class = "card-title">Highest Class Levels</h2>
+      <ul class = "list-group list-group-flush text-bg-dark">
+        <li class = "text-bg-dark list-group-item">
+          {% if majors.English_Level %}
+          Highest English Level: {{majors.English_Level}}
+          {% endif %}
+        </li>
+        <li class = "text-bg-dark list-group-item">
+          {% if majors.Math_Level %}
+          Highest Math Level: {{majors.English_Level}}
+          {% endif %}
+        </li>
+        <li class = "text-bg-dark list-group-item">
+          {% if majors.Science_Level %}
+          Highest Science Level: {{majors.English_Level}}
+          {% endif %}
+        </li>
+      </ul>
+    </div>
+  </div>
+  {% endfor %}
 </div>
 {% endblock %}
