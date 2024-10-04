@@ -54,7 +54,8 @@ def results():
     major_keywords = major.Major_Keywords.strip().split(',') if major.Major_Keywords else []
     major_set = set(major_keywords)
     intersect = list(major_set & keywords_set)
-    filtered_majors.update({major.Major_Name: len(intersect)})
+    if len(intersect) > 0:
+      filtered_majors.update({major.Major_Name: len(intersect)})
   #sort majors based on most amount of keywords
   sorted_dict = dict(sorted(filtered_majors.items(), key=lambda item: item[1], reverse = True))
   queries = []
@@ -69,4 +70,6 @@ def results():
 
 @views.route('/major/<string:major_name>')
 def major(major_name):
-  return "HI"
+  query = Major.query.filter_by(Major_Name = major_name).first()
+  
+  return render_template('majors.html', major = query)

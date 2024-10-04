@@ -1,0 +1,50 @@
+{% extends 'index.html' %}
+{% block navbar %}{{super()}}{% endblock %}
+{% block main %}
+<div class="container-fluid">
+  <h2>{{major.Major_Name}}</h2>
+  <div class="container mt-5">
+    <div class="row">
+      {% if major.English_Level %}
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-header">
+                    Highest English Level
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{major.English_Level}}</h5> <!-- Change this value dynamically -->
+                    <p class="card-text">The highest level of English proficiency in the class.</p>
+                </div>
+            </div>
+        </div>
+      {% endif %}
+      {% if major.Math_Level %}
+      <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-header">
+                    Highest Math Level
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{major.Math_Level}}</h5> <!-- Change this value dynamically -->
+                    <p class="card-text">The highest level of Math proficiency in the class.</p>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% if major.Science_Level %}
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-header">
+                    Highest Science Level
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{major.Science_Level}}</h5> <!-- Change this value dynamically -->
+                    <p class="card-text">The highest level of Science proficiency in the class.</p>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}
