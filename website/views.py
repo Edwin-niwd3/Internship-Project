@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
 from .models import Path, Major, Student
+from markupsafe import escape
 
 
 views = Blueprint('views', __name__)
@@ -65,3 +66,7 @@ def results():
       print(f"no query found for {key}")
 
   return render_template('results.html', filtered_majors = queries)
+
+@views.route('/major/<string:major_name>')
+def major(major_name):
+  return "HI"
