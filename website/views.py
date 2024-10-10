@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
-from .models import Path, Major, Student
+from .models import Path, Major, Student, Class
 from markupsafe import escape
 
 
@@ -70,6 +70,11 @@ def results():
 
 @views.route('/major/<string:major_name>')
 def major(major_name):
-  query = Major.query.filter_by(Major_Name = major_name).first()
-  
-  return render_template('majors.html', major = query)
+  Major_query = Major.query.filter_by(Major_Name = major_name).first()
+  Math_Prerequisites = []
+  English_Prerequisites = []
+  Science_Prerequisites = []
+
+  Class_query = Major.query.all()
+
+  return render_template('majors.html', major = Major_query)
