@@ -4,3 +4,8 @@ app = create_app()
 
 if __name__ == "__main__":
   app.run(debug = True)
+
+
+  #ask school/district IT department to host website
+  #Can also possibly host through ULV
+  #GoDaddy, PythonAnywhere, InfinityFree,
