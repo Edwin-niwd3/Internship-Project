@@ -1,0 +1,1 @@
+web: gunicorn main:app --bring 0.0.0.0:$PORT
