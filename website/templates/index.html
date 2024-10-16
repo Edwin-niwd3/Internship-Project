@@ -63,14 +63,14 @@
             </tr>
         </thead>
         <tbody>
-            {% for course in path.classes %}
+            {% for i in range(5) %}
             <tr>
-              <td class="subject-col">{{course.Course_Name}}</td>
+              <td class="subject-col">{{path.classes[i].Course_Name}}</td>
                 {% for x in range(5) %}
                 {% if x == 0 %}
-                <td><input type="radio" name="grade-{{course.Course_Name}}" class="form-check-input" id="radio-{{course.Course_Name}}-{{x}}" value="{{x}}" checked></td>
+                <td><input type="radio" name="grade-{{path.classes[i].Course_Name}}" class="form-check-input" id="radio-{{path.classes[i].Course_Name}}-{{x}}" value="{{x}}" checked></td>
                 {% endif %}
-                <td><input type="radio" name="grade-{{course.Course_Name}}" class="form-check-input" id="radio-{{course.Course_Name}}-{{x}}" value="{{x}}"></td>
+                <td><input type="radio" name="grade-{{path.classes[i].Course_Name}}" class="form-check-input" id="radio-{{path.classes[i].Course_Name}}-{{x}}" value="{{x}}"></td>
                 {% endfor %}
             </tr>
             {% endfor %}

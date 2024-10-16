@@ -29,9 +29,6 @@ def home():
       # Retrieve the selected radio button value for each course
       selected_grade = request.form.get(f'grade-{course}')
       selected_grades[course] = selected_grade
-      if selected_grade == None:
-        flash(f"{course} was left unanswered", 'error')
-        return redirect(request.url)
     ##print(keywords)
     keywords_str = ','.join(keywords)
     student = Student(firstName = First_Name, lastName = Last_Name, keywords= keywords_str, classesTaken=selected_grades)
@@ -91,6 +88,7 @@ def major(major_name):
     science_prerequisites.reverse()
   print(f"math prerequisites = {math_prerequisites}\nenglish prerequisites = {english_prerequisites}\nscience prerequisites = {science_prerequisites}")
   #reverse every list
+  print(session['student'])
 
   return render_template('majors.html', major = Major_query, english_prerequisites = english_prerequisites, math_prerequisites = math_prerequisites, science_prerequisites = science_prerequisites)
 
