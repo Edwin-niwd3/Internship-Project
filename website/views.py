@@ -82,12 +82,15 @@ def major(major_name):
   science_course = Class.query.filter_by(Course_Name = Science_Class[0]).first()
   if math_course:
     math_prerequisites = collect_prerequisites(math_course)
+    math_prerequisites.reverse()
   if english_course:
     english_prerequisites = collect_prerequisites(english_course)
+    english_prerequisites.reverse()
   if science_course:
     science_prerequisites = collect_prerequisites(science_course)
+    science_prerequisites.reverse()
   print(f"math prerequisites = {math_prerequisites}\nenglish prerequisites = {english_prerequisites}\nscience prerequisites = {science_prerequisites}")
-
+  #reverse every list
 
   return render_template('majors.html', major = Major_query)
 
