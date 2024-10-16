@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
 from .models import Path, Major, Student, Class
 from markupsafe import escape
-from .tools import getNames, getPrerequisets
+from .tools import getNames, collect_prerequisites
 import difflib
 
 views = Blueprint('views', __name__)
@@ -75,9 +75,10 @@ def major(major_name):
   ClassList = getNames(Class.query.all())
   #returns a list of close names, just take the first one
   Math_Class = difflib.get_close_matches(Major_query.Math_Level, ClassList)
-  if Math_Class[0]:
-    Math_Prerequisites = getPrerequisets(Math_Class[0])
-    print(Math_Prerequisites)
+  course = Class.query.filter_by(Course_Name = Math_Class[0]).first()
+  if course:
+    prerequisites = collect_prerequisites(course)
+    print(prerequisites)
   
   return render_template('majors.html', major = Major_query)
 

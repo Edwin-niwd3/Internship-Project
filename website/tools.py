@@ -6,22 +6,16 @@ def getNames(Class_Query):
     ans.append(Class.Course_Name)
   return ans
 
-def getPrerequisets(Course_Name):
-  course = Class.query.filter_by(Course_Name = Course_Name).first()
+def collect_prerequisites(course, collected=None):
+    if collected is None:
+        collected = []
 
-  if not course:
-    return []
-  
-  if not course.Course_Prerequisite:
-    return []
-  
-  prerequisites = course.Course_Prerequisite.split(',')
+    # Add the current course name if it's not already in the list
+    if course.Course_Name not in collected:
+        collected.append(course.Course_Name)
 
-  all_prerequisets = []
-
-  for prereq in prerequisites:
-    prereq = prereq.strip()
-    all_prerequisets.append(prereq)
-    all_prerequisets.extend(getPrerequisets(prereq))
-  
-  return all_prerequisets
+    # Recursively collect prerequisites for this course
+    for prereq in course.prerequisites:
+        collect_prerequisites(prereq, collected)
+    
+    return collected

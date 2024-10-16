@@ -52,9 +52,6 @@
             <tr>
                 <th rowspan="2">Subject</th>
                 <th colspan="6">Grade Level</th>
-                <th rowspan="2">Honors</th>
-                <th rowspan="2">AP</th>
-                <th rowspan="2">Dual Enrollment</th>
             </tr>
             <tr>
                 <th>None</th>
@@ -69,7 +66,7 @@
             {% for course in path.classes %}
             <tr>
               <td class="subject-col">{{course.Course_Name}}</td>
-                {% for x in range(9) %}
+                {% for x in range(5) %}
                 {% if x == 0 %}
                 <td><input type="radio" name="grade-{{course.Course_Name}}" class="form-check-input" id="radio-{{course.Course_Name}}-{{x}}" value="{{x}}" checked></td>
                 {% endif %}

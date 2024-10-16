@@ -19,10 +19,17 @@ class Student(UserMixin):
     def from_dict(self, data):
         return Student(data['firstName'], data['lastName'], data['keywords'], data['classesTaken'])
 
+prerequisite_table = db.Table('prerequisite',
+    db.Column('course_id', db.Integer, db.ForeignKey('class.id'), primary_key=True),
+    db.Column('prerequisite_id', db.Integer, db.ForeignKey('class.id'), primary_key=True)
+)
+
 class Class(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     Course_Name = db.Column(db.String(1000))
-    Course_Prerequisite = db.Column(db.String(1000))
+    prerequisites = db.relationship('Class', secondary=prerequisite_table, 
+                                     primaryjoin=id==prerequisite_table.c.course_id,
+                                     secondaryjoin=id==prerequisite_table.c.prerequisite_id)
     Course_Notes = db.Column(db.String(10000))
     Course_Path = db.Column(db.Integer, db.ForeignKey('path.id'))
 
