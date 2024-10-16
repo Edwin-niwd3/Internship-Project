@@ -16,9 +16,9 @@
                     <p class="card-text">The highest level of English proficiency in the class.</p>
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class = "list-group-item">An Item</li>
-                    <li class = "list-group-item">A Second Item</li>
-                    <li class = "list-group-item">A Third Item</li>
+                    {% for i in range(english_prerequisites | length - 1) %}
+                    <li class="list-group-item">{{ english_prerequisites[i] }}</li>
+                {% endfor %}
                 </ul>
             </div>
         </div>
@@ -33,6 +33,11 @@
                     <h5 class="card-title">{{major.Math_Level}}</h5> <!-- Change this value dynamically -->
                     <p class="card-text">The highest level of Math proficiency in the class.</p>
                 </div>
+                <ul class="list-group list-group-flush">
+                    {% for i in range(math_prerequisites | length - 1) %}
+                    <li class="list-group-item">{{ math_prerequisites[i] }}</li>
+                {% endfor %}
+                </ul>
             </div>
         </div>
         {% endif %}
@@ -46,6 +51,11 @@
                     <h5 class="card-title">{{major.Science_Level}}</h5> <!-- Change this value dynamically -->
                     <p class="card-text">The highest level of Science proficiency in the class.</p>
                 </div>
+                <ul class="list-group list-group-flush">
+                {% for i in range(science_prerequisites | length - 1) %}
+                    <li class="list-group-item">{{ science_prerequisites[i] }}</li>
+                {% endfor %}
+                </ul>
             </div>
         </div>
         {% endif %}

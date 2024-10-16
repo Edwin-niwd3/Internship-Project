@@ -92,5 +92,5 @@ def major(major_name):
   print(f"math prerequisites = {math_prerequisites}\nenglish prerequisites = {english_prerequisites}\nscience prerequisites = {science_prerequisites}")
   #reverse every list
 
-  return render_template('majors.html', major = Major_query)
+  return render_template('majors.html', major = Major_query, english_prerequisites = english_prerequisites, math_prerequisites = math_prerequisites, science_prerequisites = science_prerequisites)
 
