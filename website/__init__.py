@@ -30,48 +30,45 @@ def create_app(test_config = None):
 
 def data_insert(app, db, Class, Path, Major):
     combinedDf = read()
-    if combinedDf:
-      with app.app_context():
-          for index, row in combinedDf[1].iterrows():
-              # Ensure the path exists or create a new one
-              path_name = row.get('Path')
-              if path_name:
-                path_id = get_or_create_path(db.session, Path, path_name)
-
     with app.app_context():
         for index, row in combinedDf[1].iterrows():
-          path_id = get_or_create_path(db.session, row.get('Path'), Path)
-          class_data = {
-              'Course_Name': row.get('Courses'),
-              'Course_Prerequisite': row.get('Prerequisite'),
-              'Course_Notes': row.get('Notes'),
-              'Course_Path': path_id  # Here you'd map the path, e.g., from the Path table
-          }
+            # Get or create the Path ID based on the 'Path' column in the data
+            path_name = row.get('Path')
+            if path_name:
+                path_id = get_or_create_path(db.session, Path, path_name)
 
-          if class_data['Course_Name']:
-              # Insert the course
-              course = insert_Class_if_not_exists(db.session, Class, class_data)
-              
-              # Add the prerequisites for the course
-              add_prerequisites(course, class_data['Course_Prerequisite'], db.session, Class)
+            # Prepare course data
+            class_data = {
+                'Course_Name': row.get('Courses'),
+                'Course_Prerequisite': row.get('Prerequisite'),
+                'Course_Notes': row.get('Notes'),
+                'Course_Path': path_id  # Use the path_id retrieved dynamically
+            }
+
+            if class_data['Course_Name']:
+                # Insert the course
+                course = insert_Class_if_not_exists(db.session, Class, class_data)
+                
+                # Add the prerequisites for the course
+                add_prerequisites(course, class_data['Course_Prerequisite'], db.session, Class)
 
         for index, row in combinedDf[0].iterrows():
-          # Insert or update Major with string values for math, english, and science levels
-          major_name = row.get('Major Name')
-          math_course = row.get('Math Level')  # This is now a string
-          english_course = row.get('English Level')  # This is now a string
-          science_course = row.get('Science Level')  # This is now a string
-          major_keywords = row.get('Keywords')
+        # Insert or update Major with string values for math, english, and science levels
+            major_name = row.get('Major Name')
+            math_course = row.get('Math Level')  # This is now a string
+            english_course = row.get('English Level')  # This is now a string
+            science_course = row.get('Science Level')  # This is now a string
+            major_keywords = row.get('Keywords')
 
-          major_data = {
-              'Major_Name': major_name,
-              'Math_Level': math_course,
-              'English_Level': english_course,
-              'Science_Level': science_course,
-              'Major_Keywords' : major_keywords
-          }
-          if major_data['Major_Name']:
-            insert_Major_if_not_exists(db.session, Major, major_data)
+            major_data = {
+                'Major_Name': major_name,
+                'Math_Level': math_course,
+                'English_Level': english_course,
+                'Science_Level': science_course,
+                'Major_Keywords' : major_keywords
+            }
+            if major_data['Major_Name']:
+                insert_Major_if_not_exists(db.session, Major, major_data)
 
 def insert_Class_if_not_exists(session, Class, class_data):
     course = session.query(Class).filter_by(Course_Name=class_data['Course_Name']).first()
@@ -105,6 +102,7 @@ def add_prerequisites(course, prerequisites_str, session, Class):
 
         session.commit()  # Commit after updating the relationships
 
+
 def insert_Major_if_not_exists(session, model, data):
    if not Major_exists(session, model, **data):
       new_record = model(**data)
@@ -128,15 +126,3 @@ def get_or_create_path(session, Path, path_name):
         session.commit()
         return new_path.id
     return path.id
-
-def get_or_create_path(session, path_name, Path):
-    # Try to find the Path by name
-    path = session.query(Path).filter_by(Path_Name=path_name).first()
-    
-    # If the Path doesn't exist, create it
-    if not path:
-        path = Path(Path_Name=path_name)
-        session.add(path)
-        session.commit()  # Commit to get the path ID
-    
-    return path.id  # Return the path ID for use in class insertion

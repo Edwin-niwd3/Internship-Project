@@ -13,7 +13,6 @@ def read():
               
               # Convert dataframe to list and append to the master list
               all_lists.append(df)
-      
       return all_lists
     except:
        return None
