@@ -75,10 +75,19 @@ def major(major_name):
   ClassList = getNames(Class.query.all())
   #returns a list of close names, just take the first one
   Math_Class = difflib.get_close_matches(Major_query.Math_Level, ClassList)
-  course = Class.query.filter_by(Course_Name = Math_Class[0]).first()
-  if course:
-    prerequisites = collect_prerequisites(course)
-    print(prerequisites)
-  
+  English_Class = difflib.get_close_matches(Major_query.English_Level, ClassList)
+  Science_Class = difflib.get_close_matches(Major_query.Science_Level, ClassList)
+  math_course = Class.query.filter_by(Course_Name = Math_Class[0]).first()
+  english_course = Class.query.filter_by(Course_Name = English_Class[0]).first()
+  science_course = Class.query.filter_by(Course_Name = Science_Class[0]).first()
+  if math_course:
+    math_prerequisites = collect_prerequisites(math_course)
+  if english_course:
+    english_prerequisites = collect_prerequisites(english_course)
+  if science_course:
+    science_prerequisites = collect_prerequisites(science_course)
+  print(f"math prerequisites = {math_prerequisites}\nenglish prerequisites = {english_prerequisites}\nscience prerequisites = {science_prerequisites}")
+
+
   return render_template('majors.html', major = Major_query)
 
