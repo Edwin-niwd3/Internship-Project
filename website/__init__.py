@@ -22,7 +22,7 @@ def create_app(test_config = None):
     if not os.path.exists('website/' + DB_NAME):
       db.create_all()
 
-  data_insert(app, db, Class, Path, Major)
+    data_insert(app, db, Class, Path, Major)
 
   app.register_blueprint(views, url_prefix = '/')
 
@@ -30,6 +30,13 @@ def create_app(test_config = None):
 
 def data_insert(app, db, Class, Path, Major):
     combinedDf = read()
+    if combinedDf:
+      with app.app_context():
+          for index, row in combinedDf[1].iterrows():
+              # Ensure the path exists or create a new one
+              path_name = row.get('Path')
+              if path_name:
+                path_id = get_or_create_path(db.session, Path, path_name)
 
     with app.app_context():
         for index, row in combinedDf[1].iterrows():
