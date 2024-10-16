@@ -30,45 +30,49 @@ def create_app(test_config = None):
 
 def data_insert(app, db, Class, Path, Major):
     combinedDf = read()
-    with app.app_context():
-        for index, row in combinedDf[1].iterrows():
-            # Get or create the Path ID based on the 'Path' column in the data
-            path_name = row.get('Path')
-            if path_name:
-                path_id = get_or_create_path(db.session, Path, path_name)
+    if combinedDf:
+        try:
+            with app.app_context():
+                for index, row in combinedDf[1].iterrows():
+                    # Get or create the Path ID based on the 'Path' column in the data
+                    path_name = row.get('Path')
+                    if path_name:
+                        path_id = get_or_create_path(db.session, Path, path_name)
 
-            # Prepare course data
-            class_data = {
-                'Course_Name': row.get('Courses'),
-                'Course_Prerequisite': row.get('Prerequisite'),
-                'Course_Notes': row.get('Notes'),
-                'Course_Path': path_id  # Use the path_id retrieved dynamically
-            }
+                    # Prepare course data
+                    class_data = {
+                        'Course_Name': row.get('Courses'),
+                        'Course_Prerequisite': row.get('Prerequisite'),
+                        'Course_Notes': row.get('Notes'),
+                        'Course_Path': path_id  # Use the path_id retrieved dynamically
+                    }
 
-            if class_data['Course_Name']:
-                # Insert the course
-                course = insert_Class_if_not_exists(db.session, Class, class_data)
-                
-                # Add the prerequisites for the course
-                add_prerequisites(course, class_data['Course_Prerequisite'], db.session, Class)
+                    if class_data['Course_Name']:
+                        # Insert the course
+                        course = insert_Class_if_not_exists(db.session, Class, class_data)
+                        
+                        # Add the prerequisites for the course
+                        add_prerequisites(course, class_data['Course_Prerequisite'], db.session, Class)
 
-        for index, row in combinedDf[0].iterrows():
-        # Insert or update Major with string values for math, english, and science levels
-            major_name = row.get('Major Name')
-            math_course = row.get('Math Level')  # This is now a string
-            english_course = row.get('English Level')  # This is now a string
-            science_course = row.get('Science Level')  # This is now a string
-            major_keywords = row.get('Keywords')
+                for index, row in combinedDf[0].iterrows():
+                # Insert or update Major with string values for math, english, and science levels
+                    major_name = row.get('Major Name')
+                    math_course = row.get('Math Level')  # This is now a string
+                    english_course = row.get('English Level')  # This is now a string
+                    science_course = row.get('Science Level')  # This is now a string
+                    major_keywords = row.get('Keywords')
 
-            major_data = {
-                'Major_Name': major_name,
-                'Math_Level': math_course,
-                'English_Level': english_course,
-                'Science_Level': science_course,
-                'Major_Keywords' : major_keywords
-            }
-            if major_data['Major_Name']:
-                insert_Major_if_not_exists(db.session, Major, major_data)
+                    major_data = {
+                        'Major_Name': major_name,
+                        'Math_Level': math_course,
+                        'English_Level': english_course,
+                        'Science_Level': science_course,
+                        'Major_Keywords' : major_keywords
+                    }
+                    if major_data['Major_Name']:
+                        insert_Major_if_not_exists(db.session, Major, major_data)
+        except:
+            pass
 
 def insert_Class_if_not_exists(session, Class, class_data):
     course = session.query(Class).filter_by(Course_Name=class_data['Course_Name']).first()
