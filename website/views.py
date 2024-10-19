@@ -1,7 +1,6 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash, session
+from flask import Blueprint, render_template, request, redirect, url_for, flash, session, abort
 from .models import Path, Major, Student, Class
-from markupsafe import escape
-from .tools import getNames, collect_prerequisites
+from .tools import getNames, get_closest_class, fetch_course_with_prerequisites
 import difflib
 
 views = Blueprint('views', __name__)
@@ -68,27 +67,28 @@ def results():
 
 @views.route('/major/<string:major_name>')
 def major(major_name):
-  Major_query = Major.query.filter_by(Major_Name = major_name).first()
-  ClassList = getNames(Class.query.all())
-  #returns a list of close names, just take the first one
-  Math_Class = difflib.get_close_matches(Major_query.Math_Level, ClassList)
-  English_Class = difflib.get_close_matches(Major_query.English_Level, ClassList)
-  Science_Class = difflib.get_close_matches(Major_query.Science_Level, ClassList)
-  math_course = Class.query.filter_by(Course_Name = Math_Class[0]).first()
-  english_course = Class.query.filter_by(Course_Name = English_Class[0]).first()
-  science_course = Class.query.filter_by(Course_Name = Science_Class[0]).first()
-  if math_course:
-    math_prerequisites = collect_prerequisites(math_course)
-    math_prerequisites.reverse()
-  if english_course:
-    english_prerequisites = collect_prerequisites(english_course)
-    english_prerequisites.reverse()
-  if science_course:
-    science_prerequisites = collect_prerequisites(science_course)
-    science_prerequisites.reverse()
-  print(f"math prerequisites = {math_prerequisites}\nenglish prerequisites = {english_prerequisites}\nscience prerequisites = {science_prerequisites}")
-  #reverse every list
-  print(session['student'])
+  major_query = Major.query.filter_by(Major_Name = major_name).first()
+  if not major_query:
+    abort(404, description = "Major not found.")
 
-  return render_template('majors.html', major = Major_query, english_prerequisites = english_prerequisites, math_prerequisites = math_prerequisites, science_prerequisites = science_prerequisites)
+  class_list = getNames(Class.query.all())
 
+  subjects = {
+    'Math': major_query.Math_Level,
+    'English': major_query.English_Level,
+    'Science': major_query.Science_Level
+  }
+
+  #iterate through each class in subjects, and get the closest match, in case some schools call it differently
+  class_matches = {subject: get_closest_class(level, class_list) for subject, level in subjects.items()}
+
+  prerequisites = {
+    subject: fetch_course_with_prerequisites(course_name) for subject, course_name in class_matches.items()
+  }
+
+  print(f"Session student: {session.get('student')}")
+  print(f"Prerequisites: {prerequisites}")
+
+  return render_template(
+    'majors.html', math_prerequisites = prerequisites['Math'], english_prerequisites = prerequisites['English'], science_prerequisites = prerequisites['Science'], major = major_query
+  )
