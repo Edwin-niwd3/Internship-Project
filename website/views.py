@@ -82,11 +82,15 @@ def major(major_name):
   #iterate through each class in subjects, and get the closest match, in case some schools call it differently
   class_matches = {subject: get_closest_class(level, class_list) for subject, level in subjects.items()}
 
+
+  data = session.get('student')
+  print(type(data))
+  student = Student.from_dict(data)
+
   prerequisites = {
-    subject: fetch_course_with_prerequisites(course_name) for subject, course_name in class_matches.items()
+    subject: fetch_course_with_prerequisites(course_name, student) for subject, course_name in class_matches.items()
   }
 
-  print(f"Session student: {session.get('student')}")
   print(f"Prerequisites: {prerequisites}")
 
   return render_template(

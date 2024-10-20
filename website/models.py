@@ -16,8 +16,23 @@ class Student(UserMixin):
         'classesTaken' : self.classesTaken
         }
     @staticmethod
-    def from_dict(self, data):
+    def from_dict(data):
         return Student(data['firstName'], data['lastName'], data['keywords'], data['classesTaken'])
+    
+    def check_if_taken(self, class_in_question):
+        try:
+            response = self.classesTaken[class_in_question]
+            #if we haven't taken the class
+            if not response:
+                return True
+            print(class_in_question, response)
+            if response == '0':
+                return True
+            #we have already taken the class
+            return False
+        except KeyError:
+            #know error, this means that the keyword isn't in the list, in which case auto return True
+            return True
 
 prerequisite_table = db.Table('prerequisite',
     db.Column('course_id', db.Integer, db.ForeignKey('class.id'), primary_key=True),
