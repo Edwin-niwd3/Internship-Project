@@ -1,4 +1,4 @@
-from .models import Class, Student
+from .models import Class, Student, Major
 import difflib
 
 def getNames(Class_Query):
@@ -35,3 +35,16 @@ def fetch_course_with_prerequisites(course_name, student):
   prerequisites = collect_prerequisites(course, student)
   prerequisites.reverse()
   return prerequisites
+
+def fetch_major_keywords():
+  """This is done to fetch all the possible keywords we can ist to a major"""
+  major_query = Major.query.all()
+  keyword_set = set()
+  for major in major_query:
+    major_keywords = major.Major_Keywords.strip().split(',') if major.Major_Keywords else []
+    #get rid of duplicates
+    for keyword in major_keywords:
+       if keyword not in keyword_set:
+          keyword_set.add(keyword)
+
+  return list(keyword_set)

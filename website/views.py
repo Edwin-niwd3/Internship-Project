@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session, abort
 from .models import Path, Major, Student, Class
-from .tools import getNames, get_closest_class, fetch_course_with_prerequisites
+from .tools import getNames, get_closest_class, fetch_course_with_prerequisites, fetch_major_keywords
 import difflib
 
 views = Blueprint('views', __name__)
@@ -34,7 +34,7 @@ def home():
     session['student'] = student.to_dict()
     return redirect(url_for('views.results', keywords = keywords_str, First_name = First_Name))
   else:    
-    keywords = ['Computers', 'Math', 'Science', 'Art', 'Electricity', 'Space', 'Law', 'Police', 'Construction', 'Engineering', 'Placeholder', 'Placeholder2', 'Placeholder3', 'Placeholder4']
+    keywords = fetch_major_keywords()
     paths = Path.query.all()
     return render_template('index.html', keywords = keywords, paths = paths)
 
