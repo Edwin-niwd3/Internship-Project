@@ -5,7 +5,7 @@
   <h1 class="my-4 d-flex justify-content-center">Majors</h1>
   {% for majors in filtered_majors %}
     <div class="list-group mb-3">
-      <a href="/major/{{majors.Major_Name}}" class="list-group-item list-group-item-action" aria-current="true">
+      <a href="/major/{{majors.Major_Name}}" class="list-group-item list-group-item-action btn btn-outline-secondary" aria-current="true">
         <div class="d-flex w-100 justify-content-between">
           <h5 class="mb-1">{{majors.Major_Name}}</h5>
           <small>rank #{{loop.index}}</small>
