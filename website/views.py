@@ -114,7 +114,6 @@ def download_pdf():
     pdf_buffer = BytesIO()
     pdf = canvas.Canvas(pdf_buffer)
 
-    # Example Usage
     y = 800  # Starting y-coordinate
     line_height = 20  # Adjust based on desired spacing
 
