@@ -8,7 +8,10 @@ def getNames(Class_Query):
   return ans
 
 def get_closest_class(level, class_list):
-  return difflib.get_close_matches(level, class_list, n=1)[0] if level else None
+  try:
+    return difflib.get_close_matches(level, class_list, n=1)[0] if level else None
+  except:
+     print(f"error at this: {level}")
 
 def collect_prerequisites(course, student, collected=None):
     if collected is None:
@@ -37,7 +40,7 @@ def fetch_course_with_prerequisites(course_name, student):
   return prerequisites
 
 def fetch_major_keywords():
-  """This is done to fetch all the possible keywords we can ist to a major"""
+  """This is done to fetch all the possible keywords we can list to a major"""
   major_query = Major.query.all()
   keyword_set = set()
   for major in major_query:
@@ -48,3 +51,9 @@ def fetch_major_keywords():
           keyword_set.add(keyword)
 
   return list(keyword_set)
+
+def draw_bulleted_list(pdf, items, x, y, line_height=20):
+    """Draws a bulleted list on the PDF."""
+    for item in items:
+        pdf.drawString(x, y, f"• {item}")
+        y -= line_height  # Move to the next line
