@@ -62,4 +62,13 @@
     </div>
   </div>
 </div>
+<a href="{{ url_for('views.download_pdf', 
+major=major.Major_Name, 
+**{'math_prerequisites': math_prerequisites, 
+   'science_prerequisites': science_prerequisites, 
+   'english_prerequisites': english_prerequisites}) }}">
+    <div class="col-12 my-4 d-flex justify-content-center">
+        <button class="btn btn-success rounded-pill" type="submit">Download PDF</button>
+    </div>
+</a>
 {% endblock %}
