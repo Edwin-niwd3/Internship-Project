@@ -3,7 +3,6 @@ from .models import Path, Major, Student, Class
 from .tools import getNames, get_closest_class, fetch_course_with_prerequisites, fetch_major_keywords, draw_bulleted_list
 from reportlab.pdfgen import canvas
 from io import BytesIO
-import difflib
 
 views = Blueprint('views', __name__)
 
