@@ -11,3 +11,191 @@ a.btn-custom:hover {
   background-color: #0056b3; /* Darker shade on hover */
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
 }
+
+/* General Reset and Base Styles */
+body {
+  background-color: #A8A8AA; /* Pantone Cool Gray 6 */
+  color: #000000; /* Rich Black */
+  font-family: 'Arial', sans-serif;
+}
+
+/* Navbar */
+.navbar {
+  background-color: #144733; /* Pantone 3435 */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  border-bottom: 2px solid #026936; /* Green border for separation */
+}
+
+.navbar .container-fluid {
+  background-color: transparent !important; /* Ensure no inner background */
+}
+
+.navbar-brand {
+  color: #A8A8AA; /* Cool Gray 6 */
+  font-weight: bold;
+  font-size: 1.4rem;
+  transition: color 0.3s ease;
+}
+
+.navbar-brand:hover {
+  color: #FFFFFF;
+}
+
+/* Navbar Toggler Button */
+.navbar-toggler {
+  border: 2px solid #026936;
+  border-radius: 5px;
+  padding: 4px 8px;
+  background-color: transparent;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.navbar-toggler:hover {
+  background-color: #026936;
+  border-color: #FFFFFF;
+}
+
+/* Toggler Icon with Black Lines */
+.navbar-toggler-icon {
+  background-image: none; /* Remove Bootstrap default icon */
+  display: inline-block;
+  width: 20px;
+  height: 2px;
+  background-color: #000000; /* Black lines */
+  position: relative;
+  transition: 0.3s ease;
+}
+
+.navbar-toggler-icon::before,
+.navbar-toggler-icon::after {
+  content: "";
+  display: block;
+  width: 20px;
+  height: 2px;
+  background-color: #000000; /* Black lines for contrast */
+  position: absolute;
+  left: 0;
+  transition: 0.3s ease;
+}
+
+.navbar-toggler-icon::before {
+  top: -6px;
+}
+
+.navbar-toggler-icon::after {
+  top: 6px;
+}
+
+/* Navbar Collapse (Dropdown) */
+.navbar-collapse {
+  background-color: #144733;
+}
+
+.nav-link {
+  color: #A8A8AA;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #FFFFFF;
+}
+
+
+/* Alerts */
+.alert {
+  background-color: #026936;
+  color: #FFFFFF;
+  border: none;
+}
+
+.btn-close {
+  color: #FFFFFF;
+}
+
+/* Form Styling */
+input[type="text"] {
+  border: 2px solid #144733;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+
+input[type="text"]:focus {
+  border-color: #026936;
+  box-shadow: 0 0 10px rgba(2, 105, 55, 0.5);
+}
+
+/* Radio Buttons */
+.form-check-input:checked {
+  background-color: #026936;
+  border-color: #026936;
+}
+
+/* Keywords Section */
+.btn-check:checked + label {
+  background-color: #026936;
+  color: #FFFFFF;
+}
+
+.btn {
+  background-color: #A8A8AA;
+  border: 2px solid #144733;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background-color: #026936;
+  color: #FFFFFF;
+  border-color: #026936;
+}
+
+/* Submit Button */
+button[type="submit"] {
+  background-color: #026936;
+  color: #FFFFFF;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  transition: 0.3s;
+}
+
+button[type="submit"]:hover {
+  background-color: #144733;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Table */
+.table {
+  border: 2px solid #144733;
+}
+
+.table thead {
+  background-color: #026936;
+  color: #FFFFFF;
+}
+
+.table tbody tr:hover {
+  background-color: rgba(2, 105, 55, 0.1);
+}
+
+/* Headings */
+h1, h2 {
+  color: #026936;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Layout Adjustments */
+.container-fluid {
+  background-color: #FFFFFF;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.main {
+  margin-top: 30px;
+}
+
+.row > .col-2 {
+  margin-bottom: 10px;
+}
