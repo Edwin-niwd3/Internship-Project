@@ -1,5 +1,6 @@
 from .models import Class, Student, Major
 import difflib
+import re
 
 def getNames(Class_Query):
   ans = []
@@ -21,6 +22,8 @@ def collect_prerequisites(course, student, collected=None):
     if course.Course_Name not in collected:
         if student.check_if_taken(course.Course_Name):
           collected.append(course.Course_Name)
+        else:
+           collected.append(return_strike_through(course.Course_Name))
 
     # Recursively collect prerequisites for this course
     for prereq in course.prerequisites:
@@ -55,5 +58,27 @@ def fetch_major_keywords():
 def draw_bulleted_list(pdf, items, x, y, line_height=20):
     """Draws a bulleted list on the PDF."""
     for item in items:
-        pdf.drawString(x, y, f"• {item}")
-        y -= line_height  # Move to the next line
+        if is_strikethrough(item):
+          item = remove_strikethrough(item)
+          pdf.drawString(x,y,f"• {item}")
+          text_width = pdf.stringWidth(item, "Helvetica", 12)
+          pdf.setLineWidth(1)  # Thickness of the line
+          pdf.line(x, y + 3, x + text_width, y + 3)
+          y -= line_height  # Move to the next line
+
+        else:
+          pdf.drawString(x, y, f"• {item}")
+          y -= line_height  # Move to the next line
+
+def return_strike_through(text):
+   """Creates a strikethrough version of a given string"""
+   return ''.join(['\u0336{}'.format(c) for c in text])
+
+def is_strikethrough(text):
+    """Check if the given string contains strikethrough formatting."""
+    return all(text[i] == '\u0336' for i in range(0, len(text), 2))
+
+def remove_strikethrough(text):
+    """Remove strikethrough formatting from the given string."""
+    # Extract only the non-\u0336 characters (those at even indices)
+    return re.sub(u'\u0336', '', text)
