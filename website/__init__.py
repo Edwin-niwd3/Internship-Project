@@ -76,6 +76,9 @@ def data_insert(app, db, Class, Path, Major):
 
 def insert_Class_if_not_exists(session, Class, class_data):
     course = session.query(Class).filter_by(Course_Name=class_data['Course_Name']).first()
+    if course:
+        course.Course_Notes = class_data.get('Course_Notes', course.Course_Notes)
+        course.Course_Path = class_data.get('Course_Path', course.Course_Path)
     if not course:
         # Create a new course if it doesn't exist
         course = Class(
@@ -83,8 +86,8 @@ def insert_Class_if_not_exists(session, Class, class_data):
             Course_Notes=class_data['Course_Notes'],
             Course_Path=class_data['Course_Path']  # This would be the ID from the Path model
         )
-        session.add(course)
-        session.commit()  # Commit to get the course ID if needed later
+    session.add(course)
+    session.commit()  # Commit to get the course ID if needed later
     return course
 
 def add_prerequisites(course, prerequisites_str, session, Class):
