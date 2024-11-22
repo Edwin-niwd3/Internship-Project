@@ -22,10 +22,9 @@ class Student(UserMixin):
     def check_if_taken(self, class_in_question):
         try:
             response = self.classesTaken[class_in_question]
-            #if we haven't taken the class
+            #checks if we haven't taken the class
             if not response:
                 return True
-            print(class_in_question, response)
             if response == '0':
                 return True
             #we have already taken the class

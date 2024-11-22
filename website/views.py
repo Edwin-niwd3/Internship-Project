@@ -85,14 +85,12 @@ def major(major_name):
 
 
   data = session.get('student')
-  print(type(data))
   student = Student.from_dict(data)
 
   prerequisites = {
     subject: fetch_course_with_prerequisites(course_name, student) for subject, course_name in class_matches.items()
   }
 
-  print(f"Prerequisites: {prerequisites}")
 
   return render_template(
     'majors.html', math_prerequisites = prerequisites['Math'], english_prerequisites = prerequisites['English'], science_prerequisites = prerequisites['Science'], major = major_query
